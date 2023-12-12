@@ -1,14 +1,13 @@
 #include "monty.h"
 
-stack_t *head = NULL;
-
 /**
  * push - pushes argument onto the stack
  * @argument: the argument to be pushed
+ * @head: pointer to the head of the stack
+ *
  * Return: void
  */
-
-void push(int argument)
+void push(stack_t **head, int argument)
 {
 	stack_t *current, *new_node = malloc(sizeof(stack_t));
 
@@ -17,66 +16,63 @@ void push(int argument)
 
 	new_node->n = argument;
 	new_node->next = NULL;
-	if (head == NULL)
+	if (*head == NULL)
 	{
-		head = new_node;
+		*head = new_node;
 		new_node->prev = NULL;
 	}
 	else
 	{
-		current = head;
+		current = *head;
 		while (current->next)
 			current = current->next;
 		current->next = new_node;
 		new_node->prev = current;
 	}
 }
-void pall(void)
-{
-	stack_t *current = head;
 
-	if (head)
-	{
-		while(current)
-			current = current->next;
-		while(current)
-		{
-			printf("%d\n", current->n);
-			current = current->prev;
-		}
-	}
-	printf("no stack");
-}
 /**
  * check_command - checks if the command is a valid instruction or not
- * @opcode: the command
+ * @opc: the command
+ * @head: pointer to the head of the stack
  * @line_num: the line number
  *
  * Return: 0 if valid instruction, -2 if invalid
  */
-/*
-int check_command(char *opcode, unsigned int line_num)
+int check_command(char *opc, stack_t **head, unsigned int line_num)
 {
-	stack_t *stack;
 	int i = 0;
+
+	instruction_t opcodes[] = {
+		{"pall", pall},
+		/*
+		 * {"pint", pint},
+		 * {"pop", pop},
+		 * {"swap", swap},
+		 * {"add", add},
+		 * {"nop", nop},
+		 */
+		{NULL, NULL}
+	};
 
 	while (opcodes[i].opcode != NULL)
 	{
-		if (strcmp(opcode, opcodes[i].opcode) == 0)
+		if (strncmp(opcodes[i].opcode, opc, strlen(opcodes[i].opcode)) == 0)
 		{
-			opcodes[i].f(stack, line_num);
+			opcodes[i].f(head, line_num);
 			return (0);
 		}
 		i++;
 	}
 
-	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, opcode);
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, opc);
 	return (-2);
-}*/
+}
 
 /**
  * check_line - checks if the line is valid or not
  * @line: the line to be checked
+ * @head: pointer to the head of the stack
  * @n: the line number
  *
  * Description: checks if the line is a valid instruction or not,
@@ -85,11 +81,10 @@ int check_command(char *opcode, unsigned int line_num)
  *
  * Return: -2 if the line is invalid, -3 if malloc error, elsewise 0
  */
-int check_line(char *line, ssize_t n)
+int check_line(char *line, stack_t **head, ssize_t n)
 {
 	char *opcode, *argument, *linecpy;
 
-	printf("checking line %ld: \n", n);
 	/*skip all the spaces in the beginning*/
 	while (isspace(*line))
 		line++;
@@ -120,12 +115,12 @@ int check_line(char *line, ssize_t n)
 			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
 			return (-2); }
-		push(atoi(argument)); }
-	pall();
-	/*else
+		push(head, atoi(argument)); }
+	else
 	{
+		check_command(opcode, head, n);
 		free(linecpy);
-		return (check_command(opcode, n)); }*/
+		return (0); }
 	free(linecpy);
 	return (0);
 }
@@ -141,6 +136,7 @@ int check_line(char *line, ssize_t n)
  */
 ssize_t read_file(const char *filename)
 {
+	stack_t *head = NULL;
 	int checker; /*return of check_line "malloc, invalid op,..."*/
 	ssize_t read_count = 0; /*number of read lines*/
 	char line[256];
@@ -155,13 +151,12 @@ ssize_t read_file(const char *filename)
 	while (fgets(line, sizeof(line), fptr))
 	{
 		read_count++;
-		checker = check_line(line, read_count);
+		checker = check_line(line, &head, read_count);
 		if (checker == -2 || checker == -3)
 		{
 			fclose(fptr);
 			return (checker);
 		}
-		printf("%s.", line);
 	}
 
 	/*if an error occured during the reading, close and return 0*/
