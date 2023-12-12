@@ -1,4 +1,5 @@
 #include "main.h"
+
 void push(char *opcode, int argument)
 {
 	printf("opcode: %s and argument = %i\n", opcode, argument);
@@ -54,23 +55,20 @@ int check_line(char *line, ssize_t n)
 	/*skip all the spaces in the beginning*/
 	while (isspace(*line))
 		line++;
-	/*if the line is empty: valid*/
-	if (*line == '\0')
+	if (*line == '\0') /*if the line is empty*/
 		return (0);
 	/*copy the line to tokenise it, if unable to strdup error*/
 	linecpy = _strdup(line);
 	if (!linecpy)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		return (-2);
-	}
+		return (-2); }
 	/*tokenise to get the command*/
 	opcode = strtok(linecpy, " ");
 	if (!opcode)
 	{
 		free(linecpy);
-		return (-1);
-	}
+		return (-1); }
 	if (strcmp(opcode, "push") == 0)
 	{
 		/*tokenise again to get the argument*/
@@ -78,18 +76,17 @@ int check_line(char *line, ssize_t n)
 		if (!argument)
 		{
 			free(linecpy);
-			return (-1);
-		}
-		/*if (atoi(argument) == 0 && strcmp(argument, "0") != 0)
+			return (-1); }
+		if (atoi(argument) == 0 && strncmp(argument, "0", 1) != 0)
 		{
-			fprintf(stderr, "L%ld: usage: push integer", n);
+			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
-			return (-2);
-		}*/
-		push(opcode, atoi(argument));
-	}
+			return (-2); }
+		push(opcode, atoi(argument)); }
 	else
-		return(check_command(opcode, n));
+	{
+		free(linecpy);
+		return (check_command(opcode, n)); }
 	free(linecpy);
 	return (0);
 }
