@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef MONTY_H
+#define MONTY_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +25,9 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
+/*this is the head of the stack*/
+extern stack_t *head;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -39,4 +42,22 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-#endif /* MAIN_H */
+/*dm functions 
+void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
+*/
+/*
+instruction_t opcodes[] = {
+	{"pall", pall},
+	{"pint", pint},
+	{"pop", pop},
+	{"swap", swap},
+	{"add", add},
+	{"nop", nop},
+	{NULL, NULL}
+};*/
+#endif /* MONTY_H */

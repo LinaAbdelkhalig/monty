@@ -1,40 +1,78 @@
-#include "main.h"
+#include "monty.h"
 
-void push(char *opcode, int argument)
+stack_t *head = NULL;
+
+/**
+ * push - pushes argument onto the stack
+ * @argument: the argument to be pushed
+ * Return: void
+ */
+
+void push(int argument)
 {
-	printf("opcode: %s and argument = %i\n", opcode, argument);
-}
+	stack_t *current, *new_node = malloc(sizeof(stack_t));
 
+	if (!new_node)
+		fprintf(stderr, "Error: malloc failed");
+
+	new_node->n = argument;
+	new_node->next = NULL;
+	if (head == NULL)
+	{
+		head = new_node;
+		new_node->prev = NULL;
+	}
+	else
+	{
+		current = head;
+		while (current->next)
+			current = current->next;
+		current->next = new_node;
+		new_node->prev = current;
+	}
+}
+void pall(void)
+{
+	stack_t *current = head;
+
+	if (head)
+	{
+		while(current)
+			current = current->next;
+		while(current)
+		{
+			printf("%d\n", current->n);
+			current = current->prev;
+		}
+	}
+	printf("no stack");
+}
 /**
  * check_command - checks if the command is a valid instruction or not
  * @opcode: the command
- * @n: the line number
+ * @line_num: the line number
  *
  * Return: 0 if valid instruction, -2 if invalid
  */
-int check_command(char *opcode, int n)
+/*
+int check_command(char *opcode, unsigned int line_num)
 {
-	(void)opcode;
-	(void)n;
-	/*if (strcmp(opcode, "pall") == 0)
-		pall();
-	else if (strcmp(opcode, "pint") == 0)
-		pint();
-	else if (strcmp(opcode, "pop") == 0)
-		pop();
-	else if (strcmp(opcode, "swap") == 0)
-		swap();
-	else if (strcmp(opcode, "add") == 0)
-		add();
-	else if (strcmp(opcode, "nop") == 0)
-		nop();
-	else
+	stack_t *stack;
+	int i = 0;
+
+	while (opcodes[i].opcode != NULL)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", n, opcode);
-		return (-2);
-	}*/
-	return (0);
-}
+		if (strcmp(opcode, opcodes[i].opcode) == 0)
+		{
+			opcodes[i].f(stack, line_num);
+			return (0);
+		}
+		i++;
+	}
+
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_num, opcode);
+	return (-2);
+}*/
 
 /**
  * check_line - checks if the line is valid or not
@@ -82,11 +120,12 @@ int check_line(char *line, ssize_t n)
 			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
 			return (-2); }
-		push(opcode, atoi(argument)); }
-	else
+		push(atoi(argument)); }
+	pall();
+	/*else
 	{
 		free(linecpy);
-		return (check_command(opcode, n)); }
+		return (check_command(opcode, n)); }*/
 	free(linecpy);
 	return (0);
 }

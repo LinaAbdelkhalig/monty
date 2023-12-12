@@ -1,4 +1,4 @@
-#include "main.h"
+#include "monty.h"
 
 /**
  * _strdup - returns a pointer to a new duplicated string of s
