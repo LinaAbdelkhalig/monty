@@ -9,7 +9,7 @@
  */
 int push(stack_t **head, int argument)
 {
-	stack_t *current, *new_node = malloc(sizeof(stack_t));
+	stack_t *new_node = malloc(sizeof(stack_t));
 
 	if (!new_node)
 	{
@@ -18,20 +18,11 @@ int push(stack_t **head, int argument)
 	}
 
 	new_node->n = argument;
-	new_node->next = NULL;
-	if (*head == NULL)
-	{
-		*head = new_node;
-		new_node->prev = NULL;
-	}
-	else
-	{
-		current = *head;
-		while (current->next)
-			current = current->next;
-		current->next = new_node;
-		new_node->prev = current;
-	}
+	new_node->next = *head;
+	new_node->prev = NULL;
+	if (*head != NULL)
+		(*head)->prev = new_node;
+	*head = new_node;
 	return (0);
 }
 
