@@ -49,8 +49,8 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 
 	instruction_t opcodes[] = {
 		{"pall", pall},
-		/*
-		 * {"pint", pint},
+		{"pint", pint},
+		 /*
 		 * {"pop", pop},
 		 * {"swap", swap},
 		 * {"add", add},

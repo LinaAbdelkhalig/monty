@@ -4,6 +4,7 @@
  * pall - prints all the values on the stack, starting from top
  * @head: a pointer to the head of the stack
  * @line_number: the number of the current line
+ * Return: void
  */
 void pall(stack_t **head, unsigned int line_number)
 {
