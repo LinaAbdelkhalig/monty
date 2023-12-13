@@ -61,7 +61,7 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 
 	while (opcodes[i].opcode != NULL)
 	{
-		if (strncmp(opcodes[i].opcode, opc, strlen(opcodes[i].opcode)) == 0)
+		if (strcmp(opcodes[i].opcode, opc) == 0)
 		{
 			opcodes[i].f(head, line_num);
 			return (0);
@@ -99,14 +99,14 @@ int check_line(char *line, stack_t **head, ssize_t n)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		return (-2); }
-	opcode = strtok(linecpy, " "); /*tokenise to get the command*/
+	opcode = strtok(linecpy, " \n\t\r"); /*tokenise to get the command*/
 	if (!opcode)
 	{
 		free(linecpy);
 		return (-1); }
 	if (strcmp(opcode, "push") == 0)
 	{
-		argument = strtok(NULL, " "); /*tokenise again to get the argument*/
+		argument = strtok(NULL, " \n\t\r"); /*tokenise again to get the argument*/
 		if (!argument)
 		{
 			free(linecpy);
