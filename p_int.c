@@ -9,8 +9,10 @@
 
 int pint(stack_t **head, unsigned int line_number)
 {
-	if (*head)
-		printf("%d\n", (*head)->n);
+	stack_t *current = *head;
+
+	if (current)
+		printf("%d\n", current->n);
 	else
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
