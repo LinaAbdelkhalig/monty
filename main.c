@@ -5,14 +5,17 @@
  * @argument: the argument to be pushed
  * @head: pointer to the head of the stack
  *
- * Return: void
+ * Return: -1 if malloc error, 0 elsewise
  */
-void push(stack_t **head, int argument)
+int push(stack_t **head, int argument)
 {
 	stack_t *current, *new_node = malloc(sizeof(stack_t));
 
 	if (!new_node)
+	{
 		fprintf(stderr, "Error: malloc failed");
+		return (-1);
+	}
 
 	new_node->n = argument;
 	new_node->next = NULL;
@@ -29,6 +32,7 @@ void push(stack_t **head, int argument)
 		current->next = new_node;
 		new_node->prev = current;
 	}
+	return (0);
 }
 
 /**
@@ -84,6 +88,7 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 int check_line(char *line, stack_t **head, ssize_t n)
 {
 	char *opcode, *argument, *linecpy;
+	int checker;
 
 	/*skip all the spaces in the beginning*/
 	while (isspace(*line))
@@ -115,12 +120,15 @@ int check_line(char *line, stack_t **head, ssize_t n)
 			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
 			return (-2); }
-		push(head, atoi(argument)); }
+		if (push(head, atoi(argument)) == -1)
+		{
+			free(linecpy);
+			return (-2); } }
 	else
 	{
-		check_command(opcode, head, n);
+		checker = check_command(opcode, head, n);
 		free(linecpy);
-		return (0); }
+		return (checker); }
 	free(linecpy);
 	return (0);
 }
@@ -168,6 +176,7 @@ ssize_t read_file(const char *filename)
 	}
 
 	fclose(fptr);
+	free_stack(&head);
 	return (read_count);
 }
 
