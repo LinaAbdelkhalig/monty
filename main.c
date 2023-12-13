@@ -90,27 +90,23 @@ int check_line(char *line, stack_t **head, ssize_t n)
 	char *opcode, *argument, *linecpy;
 	int checker;
 
-	/*skip all the spaces in the beginning*/
-	while (isspace(*line))
+	while (isspace(*line)) /*skip all the spaces in the beginning*/
 		line++;
 	if (*line == '\0') /*if the line is empty*/
 		return (0);
-	/*copy the line to tokenise it, if unable to strdup error*/
-	linecpy = _strdup(line);
+	linecpy = _strdup(line); /*copy the line to tokenise it*/
 	if (!linecpy)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		return (-2); }
-	/*tokenise to get the command*/
-	opcode = strtok(linecpy, " ");
+	opcode = strtok(linecpy, " "); /*tokenise to get the command*/
 	if (!opcode)
 	{
 		free(linecpy);
 		return (-1); }
 	if (strcmp(opcode, "push") == 0)
 	{
-		/*tokenise again to get the argument*/
-		argument = strtok(NULL, " ");
+		argument = strtok(NULL, " "); /*tokenise again to get the argument*/
 		if (!argument)
 		{
 			free(linecpy);
@@ -123,15 +119,15 @@ int check_line(char *line, stack_t **head, ssize_t n)
 		if (push(head, atoi(argument)) == -1)
 		{
 			free(linecpy);
-			return (-2); } }
+			return (-2); }
+	}
 	else
 	{
 		checker = check_command(opcode, head, n);
 		free(linecpy);
 		return (checker); }
 	free(linecpy);
-	return (0);
-}
+	return (0); }
 
 /**
  * read_file - reads the monty file

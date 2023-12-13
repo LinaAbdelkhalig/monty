@@ -11,7 +11,7 @@ void pall(stack_t **head, unsigned int line_number)
 
 	(void)line_number;
 
-	while (current->next)
+	while (current && current->next)
 		current = current->next;
 	while (current)
 	{
