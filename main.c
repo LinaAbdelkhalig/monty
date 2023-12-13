@@ -107,12 +107,7 @@ int check_line(char *line, stack_t **head, ssize_t n)
 	if (strcmp(opcode, "push") == 0)
 	{
 		argument = strtok(NULL, " "); /*tokenise again to get the argument*/
-		if (!argument)
-		{
-			fprintf(stderr, "L%ld: usage: push integer\n", n);
-			free(linecpy);
-			return (-1); }
-		if (atoi(argument) == 0 && strncmp(argument, "0", 1) != 0)
+		if (!argument && atoi(argument) == 0 && strncmp(argument, "0", 1) != 0)
 		{
 			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
