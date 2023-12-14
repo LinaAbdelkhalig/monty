@@ -10,7 +10,7 @@ int is_int(char *argument)
 {
 	int i = 0;
 
-	if (argument[0] == '-' || argument[0] == '+')
+	if (argument[0] == '-')
 		i = 1;
 	for (; argument[i] != '\0'; i++)
 		if (!isdigit(argument[i]))
