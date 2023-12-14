@@ -44,9 +44,6 @@ typedef struct instruction_s
 
 void free_stack(stack_t **head);
 
-/*this is to check if the arg is int or not*/
-int is_int(char *argument);
-
 /*dm functions*/
 int pall(stack_t **stack, unsigned int line_number);
 int pint(stack_t **stack, unsigned int line_number);
@@ -54,6 +51,7 @@ int pop(stack_t **stack, unsigned int line_number);
 int swap(stack_t **stack, unsigned int line_number);
 int add(stack_t **stack, unsigned int line_number);
 int nop(stack_t **stack, unsigned int line_number);
+int sub(stack_t **stack, unsigned int line_number);
 
 extern instruction_t opcodes[];
 
