@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * nop - idk 
+ * nop - idk
  * @head: what is even
  * @line_number: the meaning of this
  * Return: :/
@@ -13,4 +13,4 @@ int nop(stack_t **head, unsigned int line_number)
 	(void)line_number;
 
 	return (0);
-}	
+}
