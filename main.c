@@ -50,6 +50,9 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"mul", mul},
 		{"mod", mod},
 		{"pchar", pchar},
+		{"pstr", pstr},
+		{"rotl", rotl},
+		{"rotr", rotr},
 		{NULL, NULL}
 	};
 
@@ -160,7 +163,6 @@ ssize_t read_file(const char *filename)
 			return (-2);
 		}
 	}
-
 	/*if an error occured during the reading, close and return 0*/
 	if (ferror(fptr))
 	{
@@ -169,7 +171,6 @@ ssize_t read_file(const char *filename)
 		free_stack(&head);
 		return (0);
 	}
-
 	fclose(fptr);
 	free_stack(&head);
 	return (read_count);
