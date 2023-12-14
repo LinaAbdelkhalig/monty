@@ -44,6 +44,9 @@ typedef struct instruction_s
 
 void free_stack(stack_t **head);
 
+/*this is to check if the arg is int or not*/
+int is_int(char *argument);
+
 /*dm functions*/
 int pall(stack_t **stack, unsigned int line_number);
 int pint(stack_t **stack, unsigned int line_number);
