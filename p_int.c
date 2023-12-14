@@ -9,7 +9,7 @@
 
 int pint(stack_t **head, unsigned int line_number)
 {
-	if (*head)
+	if (head && *head)
 		printf("%d\n", (*head)->n);
 	else
 	{
