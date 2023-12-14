@@ -86,7 +86,7 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 int check_line(char *line, stack_t **head, ssize_t n)
 {
 	char *opcode, *argument, *linecpy;
-	int checker;
+	int checker, i = 0;
 
 	while (isspace(*line)) /*skip all the spaces in the beginning*/
 		line++;
@@ -104,12 +104,22 @@ int check_line(char *line, stack_t **head, ssize_t n)
 		return (-1); }
 	if (strcmp(opcode, "push") == 0)
 	{
-		argument = strtok(NULL, " "); /*tokenise again to get the argument*/
-		if (!argument || (atoi(argument) == 0 && strncmp(argument, "0", 1) != 0))
+		argument = strtok(NULL, " \n\t\r"); /*tokenise again to get the argument*/
+		if (!argument)
 		{
 			fprintf(stderr, "L%ld: usage: push integer\n", n);
 			free(linecpy);
 			return (-2); }
+		if (argument[0] == '-')
+			i++;
+		for (; argument[i] != '\0'; i++)
+		{
+			if (argument[i] < '0' || argument[i] > '9')
+			{
+				fprintf(stderr, "L%ld: usage: push integer\n", n);
+				free(linecpy);
+				return (-2); }
+		}
 		if (push(head, atoi(argument)) == -1)
 		{
 			free(linecpy);
