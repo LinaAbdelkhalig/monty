@@ -15,7 +15,8 @@ int pstr(stack_t **head, unsigned int line_number)
 
 	while (h)
 	{
-		if ((h->n == 0) || (h->n < 65 && h->n > 90) || (h->n < 97 && h->n > 122))
+		/*if ((h->n == 0) || (h->n < 65 && h->n > 90) || (h->n < 97 && h->n > 122))*/
+		if ((h->n == 0) || (h->n < 32 && h->n > 126))
 		{
 			printf("\n");
 			return (0);
