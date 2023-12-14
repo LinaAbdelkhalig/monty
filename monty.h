@@ -53,6 +53,8 @@ int add(stack_t **stack, unsigned int line_number);
 int nop(stack_t **stack, unsigned int line_number);
 int sub(stack_t **stack, unsigned int line_number);
 int diva(stack_t **stack, unsigned int line_number);
+int mul(stack_t **stack, unsigned int line_number);
+int mod(stack_t **stack, unsigned int line_number);
 
 extern instruction_t opcodes[];
 

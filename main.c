@@ -47,6 +47,8 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"nop", nop},
 		{"sub", sub},
 		{"div", diva},
+		{"mul", mul},
+		{"mod", mod},
 		{NULL, NULL}
 	};
 
@@ -84,7 +86,7 @@ int check_line(char *line, stack_t **head, ssize_t n)
 
 	while (isspace(*line)) /*skip all the spaces in the beginning*/
 		line++;
-	if (*line == '\0') /*if the line is empty*/
+	if (*line == '\0' || *line == '#') /*if the line is empty or comment*/
 		return (0);
 	linecpy = _strdup(line); /*copy the line to tokenise it*/
 	if (!linecpy)
