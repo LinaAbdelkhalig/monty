@@ -46,6 +46,7 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"add", add},
 		{"nop", nop},
 		{"sub", sub},
+		{"div", diva},
 		{NULL, NULL}
 	};
 
