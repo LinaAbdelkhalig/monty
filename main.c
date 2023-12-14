@@ -49,6 +49,7 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"div", diva},
 		{"mul", mul},
 		{"mod", mod},
+		{"pchar", pchar},
 		{NULL, NULL}
 	};
 
@@ -149,11 +150,13 @@ ssize_t read_file(const char *filename)
 		if (checker == -2 || checker == -3)
 		{
 			fclose(fptr);
+			free_stack(&head);
 			return (checker);
 		}
 		if (checker == -1)
 		{
 			fclose(fptr);
+			free_stack(&head);
 			return (-2);
 		}
 	}
@@ -163,6 +166,7 @@ ssize_t read_file(const char *filename)
 	{
 		fprintf(stderr, "Error: Failed to read the file\n");
 		fclose(fptr);
+		free_stack(&head);
 		return (0);
 	}
 
