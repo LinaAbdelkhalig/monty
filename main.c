@@ -43,8 +43,8 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"pint", pint},
 		{"pop", pop},
 		{"swap", swap},
+		{"add", add},
 		/*
-		 * {"add", add},
 		 * {"nop", nop},
 		 */
 		{NULL, NULL}
