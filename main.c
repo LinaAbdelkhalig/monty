@@ -13,7 +13,7 @@ int push(stack_t **head, int argument)
 
 	if (!new_node)
 	{
-		fprintf(stderr, "Error: malloc failed");
+		fprintf(stderr, "Error: malloc failed\n");
 		return (-1);
 	}
 
@@ -52,7 +52,8 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 	{
 		if (strncmp(opcodes[i].opcode, opc, strlen(opcodes[i].opcode)) == 0)
 		{
-			opcodes[i].f(head, line_num);
+			if (opcodes[i].f(head, line_num) == -1)
+				return (-2);
 			return (0);
 		}
 		i++;
