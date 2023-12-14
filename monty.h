@@ -48,8 +48,8 @@ void free_stack(stack_t **head);
 int pall(stack_t **stack, unsigned int line_number);
 int pint(stack_t **stack, unsigned int line_number);
 int pop(stack_t **stack, unsigned int line_number);
+int swap(stack_t **stack, unsigned int line_number);
 /*
- * void swap(stack_t **stack, unsigned int line_number);
  * void add(stack_t **stack, unsigned int line_number);
  * void nop(stack_t **stack, unsigned int line_number);
  */

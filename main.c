@@ -42,8 +42,8 @@ int check_command(char *opc, stack_t **head, unsigned int line_num)
 		{"pall", pall},
 		{"pint", pint},
 		{"pop", pop},
+		{"swap", swap},
 		/*
-		 * {"swap", swap},
 		 * {"add", add},
 		 * {"nop", nop},
 		 */
