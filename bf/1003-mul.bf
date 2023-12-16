@@ -36,3 +36,6 @@ convert to ascii
 
 print
 >>[.<<]<[<<]>>.
+
+print the new line
+>>++++++++++.
